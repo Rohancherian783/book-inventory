@@ -17,7 +17,7 @@ jobs:
     
     - uses: actions/checkout@v2
     
-    - uses: actions/cache@v4
+    - uses: actions/cache@v4  # Updated from v1 to v4
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -43,7 +43,7 @@ jobs:
         mv $artifactName1 $artifactName2
     
     - name: Upload artifact 
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@v4  # Updated from master to v4
       with:
           name: artifacts
           path: target/*.jar
@@ -58,14 +58,14 @@ jobs:
     
     - uses: actions/checkout@v2
     
-    - uses: actions/cache@v1
+    - uses: actions/cache@v4  # Updated from v1 to v4
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
     
-    - uses: actions/download-artifact@master
+    - uses: actions/download-artifact@v4  # Updated from master to v4
       with:
         name: artifacts
     
@@ -80,5 +80,6 @@ jobs:
          -Danypoint.username="$USERNAME" \
          -Danypoint.password="$PASSWORD" \
          -DskipTests
+
 
 
