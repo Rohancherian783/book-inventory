@@ -77,8 +77,8 @@ jobs:
     
     - name: Deploy to Anypoint Platform
       env:
-        USERNAME: ${{ secrets.ANYPOINT_USERNAME }}
-        PASSWORD: ${{ secrets.ANYPOINT_PASSWORD }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
       run: |
         artifact=$(ls target/*.jar | head -1)
         mvn deploy -DmuleDeploy \
