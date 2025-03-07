@@ -30,7 +30,7 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<cloudhub2Deployment>
+					<Deployment>
 						<target>CLOUDHUB_2_0</target>
 						<muleVersion>4.4.0</muleVersion>
 						<username>Rohann_Cherian</username>
@@ -40,7 +40,7 @@
 						<workers>1</workers>
 						<workerType>MICRO</workerType>
 						<objectStoreV2>true</objectStoreV2>
-					</cloudhub2Deployment>
+					</cloudhubDeployment>
 					<sharedLibraries>
 						<sharedLibrary>
 							<groupId>mysql</groupId>
