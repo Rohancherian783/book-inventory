@@ -1,0 +1,91 @@
+# This workflow builds a MuleSoft project and deploys it to CloudHub
+
+name: Build and Deploy to Sandbox
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+    steps:
+    
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: Cache Maven Dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          maven-${{ runner.os }}-
+    
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '8'
+
+    - name: Print Maven Effective Settings (Optional)
+      run: mvn help:effective-settings
+    
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    
+    - name: Rename Artifact with Commit Hash
+      run: |
+        artifact=$(ls target/*.jar | head -1)
+        commitHash=$(git rev-parse --short "$GITHUB_SHA")
+        mv $artifact target/app-$commitHash.jar
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: mule-artifact
+        path: target/*.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+    steps:    
+
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: Cache Maven Dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          maven-${{ runner.os }}-
+    
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: mule-artifact
+        path: target/
+    
+    - name: Deploy to Anypoint Platform
+      env:
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+      run: |
+        artifact=$(ls target/*.jar | head -1)
+        mvn deploy -DmuleDeploy \
+         -Dmule.artifact=$artifact \
+         -Danypoint.username="$USERNAME" \
+         -Danypoint.password="$PASSWORD" \
+         -DskipTests
+
+
+  
