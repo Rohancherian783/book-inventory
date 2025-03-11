@@ -80,9 +80,9 @@ jobs:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       run: |
-        artifact=$(ls target/*.jar | head -1)
+        artifactName=$(ls *.jar | head -1)
         mvn deploy -DmuleDeploy \
-         -Dmule.artifact=$artifact \
+         -Dartifact=$artifact \
          -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
          -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
          -DskipTests
