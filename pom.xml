@@ -42,7 +42,7 @@
                         <workers>1</workers>
                         <workerType>MICRO</workerType>
                         <objectStoreV2>true</objectStoreV2>
-                        <<username>Rohann_Cherian</username>
+                        <username>Rohann_Cherian</username>
                         <password>Rohan9984*</password>
                     </cloudHub2Deployment>
                 </configuration>
