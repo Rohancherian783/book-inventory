@@ -30,10 +30,10 @@
             <plugin>
                 <groupId>org.mule.tools.maven</groupId>
                 <artifactId>mule-maven-plugin</artifactId>
-                <version>4.4.0</version>
+                <version>4.5.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <cloudHub2Deployment>
+                    <deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <target>CloudHub-2.0</target>
                         <muleVersion>4.8.1</muleVersion>
@@ -44,7 +44,7 @@
                         <objectStoreV2>true</objectStoreV2>
                         <username>${env.ANYPOINT_PLATFORM_USERNAME}</username>
                         <password>${env.ANYPOINT_PLATFORM_PASSWORD}</password>
-                    </cloudHub2Deployment>
+                    </deployment>
                 </configuration>
             </plugin>
         </plugins>
