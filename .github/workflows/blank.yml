@@ -77,14 +77,14 @@ jobs:
     
     - name: Deploy to Anypoint Platform
       env:
-        USERNAME: ${{ secrets.USERNAME }}
-        PASSWORD: ${{ secrets.PASSWORD }}
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
+        ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       run: |
         artifact=$(ls target/*.jar | head -1)
         mvn deploy -DmuleDeploy \
          -Dmule.artifact=$artifact \
-         -Danypoint.username="$USERNAME" \
-         -Danypoint.password="$PASSWORD" \
+         -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+         -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
          -DskipTests
 
 
