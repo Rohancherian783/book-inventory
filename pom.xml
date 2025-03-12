@@ -33,7 +33,7 @@
                 <version>4.4.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <deployment>
+                    <cloudHub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <target>CloudHub-2.0</target>
                         <muleVersion>4.8.1</muleVersion>
@@ -44,7 +44,7 @@
                         <objectStoreV2>true</objectStoreV2>
                         <username>${env.ANYPOINT_PLATFORM_USERNAME}</username>
                         <password>${env.ANYPOINT_PLATFORM_PASSWORD}</password>
-                    </deployment>
+                    </cloudHub2Deployment>
                 </configuration>
             </plugin>
         </plugins>
