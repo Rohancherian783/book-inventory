@@ -46,7 +46,7 @@
                                       <username>${env.ANYPOINT_PLATFORM_USERNAME}</username>
                                       <password>${env.ANYPOINT_PLATFORM_PASSWORD}</password>
                         </provider>         
-                    </cloudHub2Deployment>
+                     </cloudHub2Deployment>
                 </configuration>
             </plugin>
         </plugins>
