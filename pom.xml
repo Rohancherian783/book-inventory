@@ -42,9 +42,10 @@
                         <workerType>MICRO</workerType>
                         <objectStoreV2>true</objectStoreV2>
                         <region>us-east-1</region> 
-                             <provider>
+                        <provider>
                                       <username>${env.ANYPOINT_PLATFORM_USERNAME}</username>
                                       <password>${env.ANYPOINT_PLATFORM_PASSWORD}</password>
+                        </provider>         
                     </cloudHub2Deployment>
                 </configuration>
             </plugin>
