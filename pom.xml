@@ -43,8 +43,8 @@
                         <objectStoreV2>true</objectStoreV2>
                         <region>us-east-1</region> 
                         <provider>
-                                      <username>${env.ANYPOINT_PLATFORM_USERNAME}</username>
-                                      <password>${env.ANYPOINT_PLATFORM_PASSWORD}</password>
+                                      <username>$Rohann_Cherian</username>
+                                      <password>Rohan9984*</password>
                         </provider>         
                      </cloudHub2Deployment>
                 </configuration>
