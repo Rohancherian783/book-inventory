@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mycompany</groupId>
@@ -15,9 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <app.runtime>4.8.1</app.runtime>
-        <mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
+        <mule.maven.plugin.version>4.4.0</mule.maven.plugin.version>
     </properties>
 
     <build>
@@ -27,14 +25,15 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.2.0</version>
             </plugin>
+
             <plugin>
                 <groupId>org.mule.tools.maven</groupId>
                 <artifactId>mule-maven-plugin</artifactId>
-                <version>4.4.0</version>
+                <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <cloudHub2Deployment>
-                        <type>cloudHub2</type>     
+                        <type>cloudHub2</type>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <target>Sandbox</target>
                         <applicationName>Book-cicd-05032025</applicationName>
@@ -43,10 +42,10 @@
                         <objectStoreV2>true</objectStoreV2>
                         <region>us-east-1</region> 
                         <provider>
-                                      <username>$Rohann_Cherian</username>
-                                      <password>Rohan9984*</password>
+                            <username>Rohann_Cherian</username>
+                            <password>Rohan9984*</password>
                         </provider>         
-                     </cloudHub2Deployment>
+                    </cloudHub2Deployment>
                 </configuration>
             </plugin>
         </plugins>
@@ -110,5 +109,4 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-
 </project>
