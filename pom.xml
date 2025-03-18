@@ -19,7 +19,6 @@
         
         <!-- Values for deployment -->
         <environment>Sandbox</environment>
-        <targetName>Sandbox</targetName>
         <muleVersion>${app.runtime}</muleVersion>
         <user>Rohann_Cherian</user>
         <pass>Rohan9984*</pass>
