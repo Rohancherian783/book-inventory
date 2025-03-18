@@ -18,7 +18,8 @@
         <mule.maven.plugin.version>4.4.0</mule.maven.plugin.version>
         
         <!-- Values for deployment -->
-        <environment>Sandbox</environment>
+        <environment>sandbox</environment>
+        <target>sandbox</target>     
         <muleVersion>${app.runtime}</muleVersion>
         <user>Rohann_Cherian</user>
         <pass>Rohan9984*</pass>
@@ -43,7 +44,7 @@
                         <uri>https://anypoint.mulesoft.com</uri>
                         <provider>MC</provider>
                         <environment>${environment}</environment>
-                        <target>${targetName}</target>
+                        <target>${target}</target>
                         <muleVersion>${muleVersion}</muleVersion>
                         <username>${user}</username>
                         <password>${pass}</password>
