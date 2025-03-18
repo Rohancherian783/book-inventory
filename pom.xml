@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -31,33 +32,18 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <deploymentType>cloudHub2</deploymentType>
-                    <cloudHubDeployment>
-                        <uri>https://anypoint.mulesoft.com</uri>
-                        <target>Sandbox</target>
+                    <cloudhub2Deployment>
+                        <muleVersion>${app.runtime}</muleVersion>
+                        <username>Rohann_Cherian</username>
+                        <password>Rohan9984*</password>
                         <applicationName>Book-cicd-05032025</applicationName>
+                        <environment>Sandbox</environment>
+                        <region>us-east-1</region>
                         <workers>1</workers>
-                        <workerType>MICRO</workerType>
+                        <workerSize>MICRO</workerSize>
                         <objectStoreV2>true</objectStoreV2>
-                        <region>us-east-1</region> 
-                        <provider>
-                            <username>Rohann_Cherian</username>
-                            <password>Rohan9984*</password>
-                        </provider>
-                    </cloudHubDeployment>
+                    </cloudhub2Deployment>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>deploy</id>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <configuration>
-                            <!-- This ensures the deploy goal uses the above configuration -->
-                            <deploymentType>cloudHub2</deploymentType>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
