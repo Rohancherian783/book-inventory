@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -15,6 +16,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <app.runtime>4.8.1</app.runtime>
         <mule.maven.plugin.version>4.4.0</mule.maven.plugin.version>
+        
+        <!-- Values for deployment -->
+        <environment>Sandbox</environment>
+        <targetName>Sandbox</targetName>
+        <muleVersion>${app.runtime}</muleVersion>
+        <user>Rohann_Cherian</user>
+        <pass>Rohan9984*</pass>
+        <appName>Book-cicd-05032025</appName>
     </properties>
 
     <build>
@@ -31,33 +40,19 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <deploymentType>cloudHub2</deploymentType>
-                    <cloudHubDeployment>
+                    <cloudhub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
-                        <target>Sandbox</target>
-                        <applicationName>Book-cicd-05032025</applicationName>
-                        <workers>1</workers>
-                        <workerType>MICRO</workerType>
-                        <objectStoreV2>true</objectStoreV2>
-                        <region>us-east-1</region> 
-                        <provider>
-                            <username>Rohann_Cherian</username>
-                            <password>Rohan9984*</password>
-                        </provider>
-                    </cloudHubDeployment>
+                        <provider>MC</provider>
+                        <environment>${environment}</environment>
+                        <target>${targetName}</target>
+                        <muleVersion>${muleVersion}</muleVersion>
+                        <username>${user}</username>
+                        <password>${pass}</password>
+                        <applicationName>${appName}</applicationName>
+                        <replicas>1</replicas>
+                        <vCores>1</vCores>
+                    </cloudhub2Deployment>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>deploy</id>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <configuration>
-                            <!-- This ensures the deploy goal uses the above configuration -->
-                            <deploymentType>cloudHub2</deploymentType>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
