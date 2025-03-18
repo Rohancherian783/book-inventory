@@ -22,7 +22,7 @@
         <muleVersion>${app.runtime}</muleVersion>
         <user>Rohann_Cherian</user>
         <pass>Rohan9984*</pass>
-        <appName>Book-cicd-05032025</appName>
+        <appName>bookapp</appName>
     </properties>
 
     <build>
