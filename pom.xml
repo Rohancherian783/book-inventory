@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -32,8 +31,8 @@
                 <version>${mule.maven.plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <cloudHub2Deployment>
-                        <type>cloudHub2</type>
+                    <deploymentType>cloudHub2</deploymentType>
+                    <cloudHubDeployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <target>Sandbox</target>
                         <applicationName>Book-cicd-05032025</applicationName>
@@ -44,9 +43,21 @@
                         <provider>
                             <username>Rohann_Cherian</username>
                             <password>Rohan9984*</password>
-                        </provider>         
-                    </cloudHub2Deployment>
+                        </provider>
+                    </cloudHubDeployment>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>deploy</id>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                        <configuration>
+                            <!-- This ensures the deploy goal uses the above configuration -->
+                            <deploymentType>cloudHub2</deploymentType>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
