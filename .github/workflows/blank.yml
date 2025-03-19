@@ -1,4 +1,4 @@
-# This workflow builds a MuleSoft project and deploys it to CloudHub
+# This workflow builds a MuleSoft project and deploys it to CloudHub 2.0
 
 name: Build and Deploy to Sandbox
 
@@ -36,13 +36,21 @@ jobs:
       run: mvn help:effective-settings
     
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    
+      run: mvn clean package -DskipTests --file pom.xml
+
+    - name: Publish to Exchange
+      env:
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
+        ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+      run: mvn deploy -DskipTests \
+        -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+        -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}"
+
     - name: Rename Artifact with Commit Hash
       run: |
         artifact=$(ls target/*.jar | head -1)
         commitHash=$(git rev-parse --short "$GITHUB_SHA")
-        mv $artifact target/app-$commitHash.jar
+        mv $artifact target/bookinventoryservice-$commitHash.jar
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
@@ -80,12 +88,13 @@ jobs:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       run: |
-        artifactName=$(ls *.jar | head -1)
-        mvn deploy -DmuleDeploy \
+        artifact=$(ls target/*.jar | head -1)
+        mvn org.mule.tools.maven:mule-maven-plugin:4.6.0:deploy \
          -Dartifact=$artifact \
          -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
          -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
          -DskipTests
+
 
 
   
