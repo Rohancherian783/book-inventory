@@ -42,7 +42,8 @@ jobs:
       env:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
-      run: mvn deploy -DskipTests \
+      run: mvn deploy \
+        -DskipTests \
         -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
         -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}"
 
@@ -89,11 +90,13 @@ jobs:
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       run: |
         artifact=$(ls target/*.jar | head -1)
-        mvn org.mule.tools.maven:mule-maven-plugin:4.6.0:deploy \
-         -Dartifact=$artifact \
-         -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
-         -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
-         -DskipTests
+        mvn -B deploy \
+          -DmuleDeploy \
+          -Dartifact=$artifact \
+          -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+          -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
+          -DskipTests
+
 
 
 
