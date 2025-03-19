@@ -42,10 +42,11 @@ jobs:
       env:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
-      run: mvn deploy \
-        -DskipTests \
-        -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
-        -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}"
+      run: |
+        mvn deploy \
+          -DskipTests \
+          -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+          -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}"
 
     - name: Rename Artifact with Commit Hash
       run: |
@@ -90,12 +91,12 @@ jobs:
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       run: |
         artifact=$(ls target/*.jar | head -1)
-        mvn -B deploy \
-          -DmuleDeploy \
+        mvn -B mule:deploy \
           -Dartifact=$artifact \
           -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
           -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
           -DskipTests
+
 
 
 
