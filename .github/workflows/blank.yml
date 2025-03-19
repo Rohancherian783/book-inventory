@@ -67,16 +67,27 @@ jobs:
         restore-keys: |
           maven-${{ runner.os }}-
     
+    - name: Configure Maven Settings
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml << EOF
+        <settings>
+          <servers>
+            <server>
+              <id>anypoint-exchange</id>
+              <username>${{ secrets.ANYPOINT_PLATFORM_USERNAME }}</username>
+              <password>${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+    
     - name: Publish to Exchange
       env:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       run: |
-        mvn deploy \
-          -DskipMuleDeploy \
-          -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
-          -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
-          -DskipTests
+        mvn deploy -X -DskipMuleDeploy -DskipTests
 
   deploy:
     needs: publish-to-exchange
@@ -98,6 +109,21 @@ jobs:
         key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           maven-${{ runner.os }}-
+    
+    - name: Configure Maven Settings
+      run: |
+        mkdir -p ~/.m2
+        cat > ~/.m2/settings.xml << EOF
+        <settings>
+          <servers>
+            <server>
+              <id>anypoint-exchange</id>
+              <username>${{ secrets.ANYPOINT_PLATFORM_USERNAME }}</username>
+              <password>${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
     
     - name: Download Artifact
       uses: actions/download-artifact@v4
