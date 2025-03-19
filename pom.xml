@@ -20,8 +20,6 @@
         <!-- Values for deployment -->
         <environment>Sandbox</environment>   
         <muleVersion>${app.runtime}</muleVersion>
-        <user>Rohann_Cherian</user>
-        <pass>Rohan9984*</pass>
         <appName>bookapp</appName>
     </properties>
 
@@ -45,8 +43,6 @@
                         <environment>${environment}</environment>
                         <target>Cloudhub-US-East-2</target>
                         <muleVersion>${muleVersion}</muleVersion>
-                        <username>${user}</username>
-                        <password>${pass}</password>
                         <applicationName>${appName}</applicationName>
                         <replicas>1</replicas>
                         <vCores>1</vCores>
