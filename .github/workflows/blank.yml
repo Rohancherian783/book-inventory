@@ -1,6 +1,4 @@
-# This workflow builds a MuleSoft project and deploys it to CloudHub
-
-name: Build and Deploy to Sandbox
+name: Build, Deploy to Sandbox, and Publish to Exchange
 
 on:
   push:
@@ -10,9 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+    # No env variables needed at job level
     steps:
     
     - name: Checkout Repository
@@ -31,7 +27,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '8'
-
+    
     - name: Print Maven Effective Settings (Optional)
       run: mvn help:effective-settings
     
@@ -43,6 +39,7 @@ jobs:
         artifact=$(ls target/*.jar | head -1)
         commitHash=$(git rev-parse --short "$GITHUB_SHA")
         mv $artifact target/app-$commitHash.jar
+    
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
@@ -52,13 +49,16 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+    # No env variables needed at job level
     steps:    
-
     - name: Checkout Repository
       uses: actions/checkout@v4
+    
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '8'
     
     - name: Cache Maven Dependencies
       uses: actions/cache@v4
@@ -74,20 +74,48 @@ jobs:
         name: mule-artifact
         path: target/
     
-    - name: Deploy to Anypoint Platform
+    - name: Deploy to CloudHub
       env:
         ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
         ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
       run: |
-        artifactName=$(ls *.jar | head -1)
+        artifactName=$(ls target/*.jar | head -1)
         mvn deploy -DmuleDeploy \
-         -Dartifact=$artifact \
-         -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
-         -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
-         -DskipTests
+          -Dartifact=${artifactName} \
+          -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+          -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
+          -DskipTests
+    
+    # No Slack notifications
 
-
-
-
-
-  
+  publish-to-exchange:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '8'
+    
+    - name: Cache Maven Dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          maven-${{ runner.os }}-
+    
+    - name: Publish to Exchange
+      env:
+        ANYPOINT_PLATFORM_USERNAME: ${{ secrets.ANYPOINT_PLATFORM_USERNAME }}
+        ANYPOINT_PLATFORM_PASSWORD: ${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}
+      run: |
+        mvn deploy \
+          -DskipMuleDeploy \
+          -Danypoint.username="${{ secrets.ANYPOINT_PLATFORM_USERNAME }}" \
+          -Danypoint.password="${{ secrets.ANYPOINT_PLATFORM_PASSWORD }}" \
+          -DskipTests
