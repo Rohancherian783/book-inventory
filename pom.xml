@@ -6,54 +6,29 @@
 
     <groupId>com.mycompany</groupId>
     <artifactId>bookinventoryservice</artifactId>
-    <version>1.0.0</version>
-    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>mule-application</packaging>
 
     <name>bookinventoryservice</name>
-
-    <modules>
-        <module>custom-asset</module>
-        <module>custom-lib</module>
-        <module>example</module>
-        <module>mule-app</module>
-        <module>policy</module>
-        <module>template</module>
-    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <app.runtime>4.9.2</app.runtime>
         <mule.maven.plugin.version>4.4.0</mule.maven.plugin.version>
-        <munit.version>2.2.4</munit.version>
-        <http.connector.version>1.5.4</http.connector.version>
-        <sockets.connector.version>1.1.5</sockets.connector.version>
-        <http.policy.transform.extension>3.1.0</http.policy.transform.extension>
+        
+        <!-- Values for deployment -->
+        <environment>Sandbox</environment>   
+        <muleVersion>${app.runtime}</muleVersion>
+        <appName>bookapp</appName>
     </properties>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.mule.tools.maven</groupId>
-                <artifactId>exchange-mule-maven-plugin</artifactId>
-                <version>0.0.13</version>
-                <executions>
-                    <execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>exchange-pre-deploy</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>exchange-deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <inherited>false</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
 
             <plugin>
@@ -65,10 +40,10 @@
                     <cloudhub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <provider>MC</provider>
-                        <environment>Sandbox</environment>
+                        <environment>${environment}</environment>
                         <target>Cloudhub-US-East-2</target>
-                        <muleVersion>${app.runtime}</muleVersion>
-                        <applicationName>bookapp</applicationName>
+                        <muleVersion>${muleVersion}</muleVersion>
+                        <applicationName>${appName}</applicationName>
                         <replicas>1</replicas>
                         <vCores>1</vCores>
                     </cloudhub2Deployment>
@@ -77,12 +52,62 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-http-connector</artifactId>
+            <version>1.10.3</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-sockets-connector</artifactId>
+            <version>1.2.5</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.connectors</groupId>
+            <artifactId>mule-amazon-sqs-connector</artifactId>
+            <version>5.11.14</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-db-connector</artifactId>
+            <version>1.14.13</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+    </dependencies>
+
     <repositories>
         <repository>
-            <id>anypoint-exchange</id>
-            <name>Corporate Repository</name>
+            <id>anypoint-exchange-v3</id>
+            <name>Anypoint Exchange</name>
             <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
             <layout>default</layout>
         </repository>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mulesoft-public</id>
+            <name>MuleSoft Releases Repository</name>
+            <layout>default</layout>
+            <url>https://repository.mulesoft.org/nexus/content/repositories/releases/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
