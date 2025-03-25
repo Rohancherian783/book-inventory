@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>e641ec83-52ce-467a-9783-89b1051bf1ae</groupId>
+    <groupId>d2488c04-e893-4845-94e2-3087b7daa8a2</groupId>
     <artifactId>bookinventoryservice</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>mule-application</packaging>
 
     <name>bookinventoryservice</name>
@@ -14,8 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <app.runtime>4.9.2</app.runtime>
-        <mule.maven.plugin.version>4.4.0</mule.maven.plugin.version>
+        <app.runtime>4.9.0</app.runtime>
+        <mule.maven.plugin.version>4.1.1</mule.maven.plugin.version>
         
         <!-- Values for deployment -->
         <environment>Sandbox</environment>   
@@ -38,15 +38,21 @@
                 <extensions>true</extensions>
                 <configuration>
                     <classifier>mule-application</classifier>
+                    <runtimeVersion>4.9.0</runtimeVersion>
                     <cloudhub2Deployment>
                         <uri>https://anypoint.mulesoft.com</uri>
                         <provider>MC</provider>
-                        <environment>${environment}</environment>
+                        <environment>Sandbox</environment>
                         <target>Cloudhub-US-East-2</target>
-                        <muleVersion>${muleVersion}</muleVersion>
-                        <applicationName>${appName}</applicationName>
+                        <server>Repository</server>
+                        <applicationName>${project.artifactId}</applicationName>
+                        <releaseChannel>EDGE</releaseChannel>
+                        <javaVersion>17</javaVersion>
                         <replicas>1</replicas>
-                        <vCores>1</vCores>
+                        <vCores>0.1</vCores>
+                        <deploymentSettings>
+                            <generateDefaultPublicUrl>true</generateDefaultPublicUrl>
+                        </deploymentSettings>
                     </cloudhub2Deployment>
                 </configuration>
             </plugin>
@@ -100,6 +106,14 @@
             <version>8.0.16</version>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>Repository</id>
+            <name>Corporate Repository</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>     
 
     <repositories>
         <repository>
@@ -114,6 +128,11 @@
             <url>https://repository.mulesoft.org/releases/</url>
             <layout>default</layout>
         </repository>
+        <repository>
+            <id>Repository</id>
+            <name>Private Exchange repository</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+            <layout>default</layout>          
     </repositories>
 
     <pluginRepositories>
