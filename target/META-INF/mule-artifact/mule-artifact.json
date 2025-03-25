@@ -5,7 +5,7 @@
   "secureProperties": [],
   "supportedJavaVersions": [],
   "redeploymentEnabled": true,
-  "name": "com.mycompany:bookinventoryservice:1.0.0-SNAPSHOT",
+  "name": "e641ec83-52ce-467a-9783-89b1051bf1ae:bookinventoryservice:1.0.1",
   "minMuleVersion": "4.8.0",
   "requiredProduct": "MULE_EE",
   "classLoaderModelLoaderDescriptor": {
