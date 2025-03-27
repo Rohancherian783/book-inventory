@@ -5,7 +5,7 @@
 
     <groupId>d2488c04-e893-4845-94e2-3087b7daa8a2</groupId>
     <artifactId>bookinventoryservice</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <packaging>mule-application</packaging>
 
     <name>bookinventoryservice</name>
