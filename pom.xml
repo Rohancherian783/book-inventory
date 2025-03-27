@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>d2488c04-e893-4845-94e2-3087b7daa8a2</groupId>
@@ -59,24 +60,28 @@
             <version>1.10.3</version>
             <classifier>mule-plugin</classifier>
         </dependency>
+
         <dependency>
             <groupId>org.mule.connectors</groupId>
             <artifactId>mule-sockets-connector</artifactId>
             <version>1.2.5</version>
             <classifier>mule-plugin</classifier>
         </dependency>
+
         <dependency>
             <groupId>com.mulesoft.connectors</groupId>
             <artifactId>mule-amazon-sqs-connector</artifactId>
             <version>5.11.14</version>
             <classifier>mule-plugin</classifier>
         </dependency>
+
         <dependency>
             <groupId>org.mule.connectors</groupId>
             <artifactId>mule-db-connector</artifactId>
             <version>1.14.13</version>
             <classifier>mule-plugin</classifier>
         </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
