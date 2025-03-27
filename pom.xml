@@ -4,7 +4,7 @@
 
     <groupId>d2488c04-e893-4845-94e2-3087b7daa8a2</groupId>
     <artifactId>bookinventoryservice</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>mule-application</packaging>
 
     <name>bookinventoryservice</name>
@@ -43,6 +43,8 @@
                         <javaVersion>17</javaVersion>
                         <replicas>1</replicas>
                         <vCores>0.2</vCores> <!-- Increased vCores for better performance -->
+                        <skipExchangePackage>false</skipExchangePackage>
+                        <overwriteArtifact>true</overwriteArtifact>
                         <deploymentSettings>
                             <generateDefaultPublicUrl>true</generateDefaultPublicUrl>
                         </deploymentSettings>
