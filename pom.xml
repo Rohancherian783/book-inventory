@@ -4,7 +4,7 @@
 
     <groupId>d2488c04-e893-4845-94e2-3087b7daa8a2</groupId>
     <artifactId>bookinventoryservice</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <packaging>mule-application</packaging>
 
     <name>bookinventoryservice</name>
@@ -41,7 +41,8 @@
                         <releaseChannel>EDGE</releaseChannel>
                         <javaVersion>17</javaVersion>
                         <replicas>1</replicas>
-                        <vCores>0.1</vCores>
+                        <vCores>0.2</vCores>
+                        <deploymentTimeout>600</deploymentTimeout>
                         <deploymentSettings>
                             <generateDefaultPublicUrl>true</generateDefaultPublicUrl>
                         </deploymentSettings>
@@ -125,4 +126,3 @@
         </pluginRepository>
     </pluginRepositories>
 </project>
-
